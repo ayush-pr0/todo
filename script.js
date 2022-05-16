@@ -50,6 +50,9 @@ window.addEventListener("load", () => {
 
         btnEdit.addEventListener("click", () => {
             if (!taskInputEl.readOnly && !taskInputEl.value.trim()) {
+                alert("Enter valid Task or just delete it.");
+                return;
+            }
             taskInputEl.readOnly = !taskInputEl.readOnly;
             const editText = taskInputEl.readOnly ? "Edit" : "Save";
             btnEdit.innerText = editText;
