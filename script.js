@@ -49,6 +49,7 @@ window.addEventListener("load", () => {
         listEl.appendChild(taskEl);
 
         btnEdit.addEventListener("click", () => {
+            if (!taskInputEl.readOnly && !taskInputEl.value.trim()) {
             taskInputEl.readOnly = !taskInputEl.readOnly;
             const editText = taskInputEl.readOnly ? "Edit" : "Save";
             btnEdit.innerText = editText;
