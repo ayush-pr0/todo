@@ -19,6 +19,10 @@ window.addEventListener("load", () => {
         const taskContentEl = document.createElement("div");
         taskContentEl.classList.add("content");
 
+        const taskCheckbox = document.createElement("input");
+        taskCheckbox.type = "checkbox";
+        taskCheckbox.classList.add("check-box");
+
         const taskInputEl = document.createElement("input");
         taskInputEl.type = "text";
         taskInputEl.classList.add("text");
@@ -41,12 +45,19 @@ window.addEventListener("load", () => {
         btnEl.appendChild(btnEdit);
         btnEl.appendChild(btnDelete);
 
+        taskContentEl.appendChild(taskCheckbox);
         taskContentEl.appendChild(taskInputEl);
 
         taskEl.appendChild(taskContentEl);
         taskEl.appendChild(btnEl);
 
         listEl.appendChild(taskEl);
+
+        taskCheckbox.addEventListener("click", () => {
+            if (taskCheckbox.checked)
+                taskInputEl.style.textDecoration = "line-through";
+            else taskInputEl.style.textDecoration = "none";
+        });
 
         btnEdit.addEventListener("click", () => {
             if (!taskInputEl.readOnly && !taskInputEl.value.trim()) {
