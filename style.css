@@ -83,6 +83,23 @@ button {
     opacity: 0.5;
 }
 
+header .actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1rem 0rem;
+}
+
+header .actions button {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    font-weight: 600;
+    transition: 0.5s;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
 main {
     flex: 1 1 0%;
     margin: 0 auto;
@@ -145,7 +162,7 @@ main {
     margin: 0 -0.5rem;
 }
 
-.task .actions button {
+#task .actions button {
     margin: 0 0.5rem;
     font-size: 1.1rem;
     font-weight: 600;
@@ -154,15 +171,16 @@ main {
     cursor: pointer;
 }
 
-.task .actions button:hover {
+.actions button:hover {
     opacity: 0.8;
 }
 
-.task .actions button:active {
+.actions button:active {
     opacity: 0.5;
 }
 
-.task .actions .edit {
+.task .actions .edit,
+header .actions .check-all {
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -176,6 +194,8 @@ main {
     background-image: linear-gradient(to right, var(--pink), var(--purple));
 } */
 
-.task .actions .delete {
+.task .actions .delete,
+header .actions .remove-checked,
+header .actions .remove-all {
     color: var(--red);
 }
