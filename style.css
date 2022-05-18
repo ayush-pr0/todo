@@ -30,8 +30,27 @@ header {
     margin: 0 auto;
 }
 
-header h1 {
+header section h1 {
+    padding-bottom: 0.6rem;
     font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--darkest);
+}
+
+header section #name {
+    color: var(--purple);
+    font-size: 2.2rem;
+    font-weight: 550;
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: initial;
+}
+
+header h2 {
+    font-size: 2.1rem;
     font-weight: 700;
     margin-bottom: 1rem;
     color: var(--darker);
@@ -157,12 +176,12 @@ main {
     color: var(--pink);
 }
 
-#tasks .task .action {
+#tasks .task .actions {
     display: flex;
     margin: 0 -0.5rem;
 }
 
-#task .actions button {
+#tasks .actions button {
     margin: 0 0.5rem;
     font-size: 1.1rem;
     font-weight: 600;

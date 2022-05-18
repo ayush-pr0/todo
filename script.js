@@ -1,10 +1,21 @@
+let todos = [];
 window.addEventListener("load", () => {
+    todos = JSON.parse(localStorage.getItem("todos")) || [];
+    DisplayTodos();
+
+    const nameInput = document.querySelector("#name");
+    const username = localStorage.getItem("username") || "";
+    nameInput.value = username;
+
+    nameInput.addEventListener("change", (e) => {
+        localStorage.setItem("username", e.target.value);
+    });
+
     const form = document.querySelector(".form");
     const input = document.querySelector("#task-input");
-    const listEl = document.querySelector("#tasks");
 
-    form.addEventListener("submit", (error) => {
-        error.preventDefault();
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
         const val = input.value.trim();
         if (!val) {
@@ -12,7 +23,28 @@ window.addEventListener("load", () => {
             return;
         }
 
+        const todo = {
+            content: val,
+            done: false,
+            // createdAt: new Date().getTime(),
+        };
+
+        todos.push(todo);
+        localStorage.setItem("todos", JSON.stringify(todos));
+        e.target.reset();
+
+        DisplayTodos();
         // else console.log(`${val}`);
+
+        // input.value = "";
+    });
+});
+
+function DisplayTodos() {
+    const listEl = document.querySelector("#tasks");
+    listEl.innerHTML = "";
+
+    todos.forEach((todo) => {
         const taskEl = document.createElement("div");
         taskEl.classList.add("task");
 
@@ -22,14 +54,13 @@ window.addEventListener("load", () => {
         const taskCheckbox = document.createElement("input");
         taskCheckbox.type = "checkbox";
         taskCheckbox.classList.add("check-box");
+        taskCheckbox.checked = todo.done;
 
         const taskInputEl = document.createElement("input");
         taskInputEl.type = "text";
         taskInputEl.classList.add("text");
-        taskInputEl.value = val;
+        taskInputEl.value = todo.content;
         taskInputEl.readOnly = true;
-
-        input.value = "";
 
         const btnEl = document.createElement("div");
         btnEl.classList.add("actions");
@@ -53,24 +84,35 @@ window.addEventListener("load", () => {
 
         listEl.appendChild(taskEl);
 
+        if (taskCheckbox.checked)
+            taskInputEl.style.textDecoration = "line-through";
+
         taskCheckbox.addEventListener("click", () => {
+            todo.done = taskCheckbox.checked;
+            localStorage.setItem("todos", JSON.stringify(todos));
+
             if (taskCheckbox.checked)
                 taskInputEl.style.textDecoration = "line-through";
             else taskInputEl.style.textDecoration = "none";
+
+            DisplayTodos();
         });
 
-        btnEdit.addEventListener("click", () => {
-            if (!taskInputEl.readOnly && !taskInputEl.value.trim()) {
-                alert("Enter valid Task or just delete it.");
-                return;
-            }
-            taskInputEl.readOnly = !taskInputEl.readOnly;
-            const editText = taskInputEl.readOnly ? "Edit" : "Save";
-            btnEdit.innerText = editText;
+        btnEdit.addEventListener("click", (e) => {
+            taskInputEl.removeAttribute("readonly", false);
+            taskInputEl.focus();
+            taskInputEl.addEventListener("blur", (e) => {
+                taskInputEl.setAttribute("readonly", true);
+                todo.content = e.target.value;
+                localStorage.setItem("todos", JSON.stringify(todos));
+                DisplayTodos();
+            });
         });
 
         btnDelete.addEventListener("click", () => {
-            listEl.removeChild(taskEl);
+            todos = todos.filter((t) => t != todo);
+            localStorage.setItem("todos", JSON.stringify(todos));
+            DisplayTodos();
         });
     });
-});
+}
