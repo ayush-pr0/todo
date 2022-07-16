@@ -100,9 +100,11 @@ function DisplayTodos() {
 
         btnEdit.addEventListener("click", (e) => {
             taskInputEl.removeAttribute("readonly", false);
+            btnEdit.textContent = "Save";
             taskInputEl.focus();
             taskInputEl.addEventListener("blur", (e) => {
                 taskInputEl.setAttribute("readonly", true);
+                btnEdit.textContent = "Edit";
                 todo.content = e.target.value;
                 localStorage.setItem("todos", JSON.stringify(todos));
                 DisplayTodos();
